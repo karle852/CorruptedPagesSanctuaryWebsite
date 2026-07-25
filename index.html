@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corrupted Pages Sanctuary — Visual Design Bible</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Amiri:wght@400;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --void-black: #050508;
+            --shadow-dark: #0D0D12;
+            --indigo-void: #1A1A4E;
+            --corrupt-blood: #8B0000;
+            --blood-dark: #5C0000;
+            --parchment: #E8DCC4;
+            --parchment-aged: #D4C4A8;
+            --leather: #5C4033;
+            --gold: #C9A227;
+            --gold-tarnished: #8B7355;
+        }
+
+        body {
+            font-family: 'Crimson Text', 'Amiri', serif;
+            background: var(--void-black);
+            color: var(--parchment);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-texture {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.03;
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(200,200,200,0.1) 2px, rgba(200,200,200,0.1) 4px);
+            animation: paperTexture 20s linear infinite;
+        }
+
+        @keyframes paperTexture {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100px); }
+        }
+
+        /* Floating Ink Particles */
+        .ink-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .ink-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--corrupt-blood);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 80px 20px 60px;
+            position: relative;
+            border-bottom: 1px solid rgba(201, 162, 39, 0.2);
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(139, 0, 0, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .logo-symbol {
+            font-size: 60px;
+            margin-bottom: 20px;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 700;
+            letter-spacing: 8px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--parchment) 0%, var(--gold) 50%, var(--parchment) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 60px rgba(201, 162, 39, 0.3);
+        }
+
+        .subtitle {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: var(--gold-tarnished);
+            letter-spacing: 3px;
+        }
+
+        .tagline {
+            font-size: 1rem;
+            color: rgba(232, 220, 196, 0.5);
+            margin-top: 20px;
+            letter-spacing: 2px;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(13, 13, 18, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(201, 162, 39, 0.2);
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            list-style: none;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        nav a {
+            color: var(--parchment);
+            text-decoration: none;
+            padding: 10px 20px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--gold);
+            border-color: var(--gold);
+        }
+
+        nav a.active {
+            color: var(--gold);
+            border-color: var(--gold-tarnished);
+            background: rgba(201, 162, 39, 0.1);
+        }
+
+        /* Sections */
+        section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 30px;
+            position: relative;
+        }
+
+        section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold-tarnished), transparent);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-number {
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem;
+            color: var(--gold);
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            color: var(--parchment);
+            letter-spacing: 4px;
+            margin-bottom: 15px;
+        }
+
+        .section-intro {
+            color: var(--gold-tarnished);
+            font-style: italic;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* Color Palette */
+        .palette-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .color-swatch {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid rgba(201, 162, 39, 0.2);
+            transition: all 0.3s ease;
+            background: rgba(13, 13, 18, 0.5);
+        }
+
+        .color-swatch:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .color-block {
+            width: 100%;
+            height: 80px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .color-name {
+            font-family: 'Cinzel', serif;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            color: var(--gold);
+            margin-bottom: 5px;
+        }
+
+        .color-hex {
+            font-size: 0.7rem;
+            color: var(--parchment-aged);
+        }
+
+        /* Image Gallery */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(201, 162, 39, 0.2);
+            background: var(--shadow-dark);
+            transition: all 0.4s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.02);
+            border-color: var(--gold);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            filter: sepia(20%) contrast(1.1);
+            transition: all 0.4s ease;
+            background-color: var(--shadow-dark);
+            display: block;
+        }
+
+        .gallery-item:hover img {
+            filter: sepia(0%) contrast(1.2);
+        }
+
+        .gallery-caption {
+            padding: 20px;
+            background: linear-gradient(to top, rgba(5, 5, 8, 0.95), transparent);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+
+        .gallery-caption h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            color: var(--gold);
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+        }
+
+        .gallery-caption p {
+            font-size: 0.85rem;
+            color: var(--parchment-aged);
+            line-height: 1.6;
+        }
+
+        /* Character Cards */
+        .character-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .character-card {
+            background: linear-gradient(135deg, var(--shadow-dark) 0%, var(--void-black) 100%);
+            border: 1px solid rgba(201, 162, 39, 0.3);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .character-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--corrupt-blood), var(--gold), var(--corrupt-blood));
+        }
+
+        .character-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            object-position: top;
+            filter: sepia(30%);
+            background-color: var(--shadow-dark);
+            display: block;
+        }
+
+        .character-info {
+            padding: 30px;
+        }
+
+        .character-role {
+            font-family: 'Cinzel', serif;
+            font-size: 0.7rem;
+            color: var(--gold);
+            letter-spacing: 3px;
+            margin-bottom: 5px;
+        }
+
+        .character-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: var(--parchment);
+            margin-bottom: 10px;
+        }
+
+        .character-quote {
+            font-style: italic;
+            color: var(--gold-tarnished);
+            padding: 15px 0;
+            border-left: 2px solid var(--corrupt-blood);
+            padding-left: 15px;
+            margin: 15px 0;
+        }
+
+        .character-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .stat {
+            padding: 10px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(201, 162, 39, 0.1);
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: var(--gold-tarnished);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .stat-value {
+            font-family: 'Cinzel', serif;
+            color: var(--parchment);
+            font-size: 0.9rem;
+        }
+
+        /* UI Mockup */
+        .ui-mockup {
+            background: linear-gradient(135deg, var(--shadow-dark), var(--void-black));
+            border: 2px solid var(--gold-tarnished);
+            border-radius: 10px;
+            padding: 30px;
+            margin-top: 40px;
+            position: relative;
+        }
+
+        .ui-mockup::before {
+            content: 'HUD DESIGN MOCKUP';
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: var(--void-black);
+            padding: 0 10px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem;
+            color: var(--gold);
+            letter-spacing: 2px;
+        }
+
+        .ui-elements {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .ui-element {
+            padding: 20px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(201, 162, 39, 0.2);
+        }
+
+        .ui-element-label {
+            font-size: 0.7rem;
+            color: var(--gold);
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .progress-bar {
+            height: 20px;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid var(--gold-tarnished);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            transition: width 0.5s ease;
+        }
+
+        .progress-fill.health {
+            background: linear-gradient(90deg, var(--blood-dark), var(--corrupt-blood));
+            width: 75%;
+        }
+
+        .progress-fill.corruption {
+            background: linear-gradient(90deg, var(--indigo-void), var(--corrupt-blood));
+            width: 35%;
+        }
+
+        /* Philosophy Box */
+        .philosophy-box {
+            background: linear-gradient(135deg, rgba(26, 26, 78, 0.3), rgba(139, 0, 0, 0.2));
+            border: 1px solid var(--gold-tarnished);
+            padding: 40px;
+            margin: 40px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .philosophy-box::before,
+        .philosophy-box::after {
+            content: '"';
+            font-family: 'Cinzel', serif;
+            font-size: 80px;
+            color: var(--gold);
+            opacity: 0.2;
+            position: absolute;
+        }
+
+        .philosophy-box::before {
+            top: 10px;
+            left: 20px;
+        }
+
+        .philosophy-box::after {
+            bottom: -30px;
+            right: 20px;
+        }
+
+        .philosophy-text {
+            font-size: 1.3rem;
+            line-height: 2;
+            color: var(--parchment);
+            font-style: italic;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            margin-top: 40px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--gold), var(--corrupt-blood), var(--gold));
+        }
+
+        .timeline-item {
+            position: relative;
+            padding: 30px 0 30px 40px;
+            border-bottom: 1px solid rgba(201, 162, 39, 0.1);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 35px;
+            width: 10px;
+            height: 10px;
+            background: var(--gold);
+            border-radius: 50%;
+            box-shadow: 0 0 20px var(--gold);
+        }
+
+        .timeline-level {
+            font-family: 'Cinzel', serif;
+            font-size: 0.7rem;
+            color: var(--gold);
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .timeline-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            color: var(--parchment);
+            margin-bottom: 10px;
+        }
+
+        .timeline-desc {
+            color: var(--parchment-aged);
+            line-height: 1.8;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 60px 20px;
+            border-top: 1px solid rgba(201, 162, 39, 0.2);
+            margin-top: 60px;
+        }
+
+        .footer-symbol {
+            font-size: 40px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .footer-quote {
+            font-style: italic;
+            color: var(--gold-tarnished);
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .footer-credit {
+            font-size: 0.8rem;
+            color: rgba(232, 220, 196, 0.3);
+            letter-spacing: 2px;
+        }
+
+        /* Scroll to top */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--shadow-dark);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 100;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+        }
+
+        .scroll-top:hover {
+            background: var(--gold);
+            color: var(--void-black);
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 60px 15px 40px; }
+            nav ul { gap: 5px; }
+            nav a { padding: 8px 12px; font-size: 0.75rem; }
+            section { padding: 40px 15px; }
+            .gallery, .character-grid { grid-template-columns: 1fr; }
+            .character-image { height: 300px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-texture"></div>
+    <div class="ink-particles">
+        <div class="ink-particle" style="left: 10%; animation-delay: 0s;"></div>
+        <div class="ink-particle" style="left: 20%; animation-delay: 2s;"></div>
+        <div class="ink-particle" style="left: 35%; animation-delay: 4s;"></div>
+        <div class="ink-particle" style="left: 50%; animation-delay: 6s;"></div>
+        <div class="ink-particle" style="left: 65%; animation-delay: 8s;"></div>
+        <div class="ink-particle" style="left: 80%; animation-delay: 10s;"></div>
+        <div class="ink-particle" style="left: 90%; animation-delay: 12s;"></div>
+    </div>
+
+    <header>
+        <div class="logo-symbol">📖</div>
+        <h1>CORRUPTED PAGES</h1>
+        <p class="subtitle">SANCTUARY</p>
+        <p class="tagline">Complete Visual Design Guide</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#philosophy" class="active">Philosophy</a></li>
+            <li><a href="#palette">Colors</a></li>
+            <li><a href="#environments">Environments</a></li>
+            <li><a href="#characters">Characters</a></li>
+            <li><a href="#enemies">Enemies</a></li>
+            <li><a href="#ui">Interface</a></li>
+            <li><a href="#levels">Levels</a></li>
+        </ul>
+    </nav>
+
+    <!-- Philosophy Section -->
+    <section id="philosophy">
+        <div class="section-header">
+            <p class="section-number">CHAPTER I</p>
+            <h2>Visual Philosophy</h2>
+            <p class="section-intro">
+                "The library is not a building — it is a breathing entity. Every corner holds a memory, and every memory can mutate into a monster."
+            </p>
+        </div>
+
+        <div class="philosophy-box">
+            <p class="philosophy-text">
+                The visual philosophy of the game relies on the principle of <strong>Beautiful Decay</strong> — 
+                where gorgeous environments slowly mutate into horrifying nightmares, yet the beauty never completely fades; 
+                it lingers like a shadow amidst the corruption.
+            </p>
+        </div>
+
+        <div class="ui-elements" style="margin-top: 40px;">
+            <div class="ui-element">
+                <div class="ui-element-label">First Principle</div>
+                <h3 style="color: var(--gold); font-family: 'Cinzel', serif; margin-bottom: 10px;">Living Breath</h3>
+                <p style="color: var(--parchment-aged); font-size: 0.9rem; line-height: 1.7;">
+                    The library "breathes" and changes constantly. Slow movements, faint pulsing, expansion, and contraction — everything is in perpetual motion.
+                </p>
+            </div>
+            <div class="ui-element">
+                <div class="ui-element-label">Second Principle</div>
+                <h3 style="color: var(--gold); font-family: 'Cinzel', serif; margin-bottom: 10px;">Gradual Decay</h3>
+                <p style="color: var(--parchment-aged); font-size: 0.9rem; line-height: 1.7;">
+                    Everything erodes slowly. Decaying textures, fading colors, frayed edges — annihilation in aesthetic forms.
+                </p>
+            </div>
+            <div class="ui-element">
+                <div class="ui-element-label">Third Principle</div>
+                <h3 style="color: var(--gold); font-family: 'Cinzel', serif; margin-bottom: 10px;">Duality</h3>
+                <p style="color: var(--parchment-aged); font-size: 0.9rem; line-height: 1.7;">
+                    Beauty morphs into terror and vice versa. The exact same scene can be both mesmerizing and deeply disturbing at once.
+                </p>
+            </div>
+            <div class="ui-element">
+                <div class="ui-element-label">Fourth Principle</div>
+                <h3 style="color: var(--gold); font-family: 'Cinzel', serif; margin-bottom: 10px;">Text as Entity</h3>
+                <p style="color: var(--parchment-aged); font-size: 0.9rem; line-height: 1.7;">
+                    Words become physical objects. Letters crawl, pages fly like swarms, and texts bleed into reality.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Color Palette Section -->
+    <section id="palette">
+        <div class="section-header">
+            <p class="section-number">CHAPTER II</p>
+            <h2>Color Palette</h2>
+            <p class="section-intro">
+                An evolving color system that shifts as the corruption spreads — from warm gold to chaotic indigo, down to absolute void.
+            </p>
+        </div>
+
+        <div class="palette-container">
+            <div class="color-swatch">
+                <div class="color-block" style="background: #0D0D12;"></div>
+                <div class="color-name">ARCANE SHADOW</div>
+                <div class="color-hex">#0D0D12</div>
+            </div>
+            <div class="color-swatch">
+                <div class="color-block" style="background: #E8DCC4;"></div>
+                <div class="color-name">DYING PARCHMENT</div>
+                <div class="color-hex">#E8DCC4</div>
+            </div>
+            <div class="color-swatch">
+                <div class="color-block" style="background: #5C4033;"></div>
+                <div class="color-name">AGED LEATHER</div>
+                <div class="color-hex">#5C4033</div>
+            </div>
+            <div class="color-swatch">
+                <div class="color-block" style="background: #C9A227;"></div>
+                <div class="color-name">BURNISHED GOLD</div>
+                <div class="color-hex">#C9A227</div>
+            </div>
+            <div class="color-swatch">
+                <div class="color-block" style="background: #8B0000;"></div>
+                <div class="color-name">CORRUPT BLOOD</div>
+                <div class="color-hex">#8B0000</div>
+            </div>
+            <div class="color-swatch">
+                <div class="color-block" style="background: #1A1A4E;"></div>
+                <div class="color-name">VOID INDIGO</div>
+                <div class="color-hex">#1A1A4E</div>
+            </div>
+            <div class="color-swatch">
+                <div class="color-block" style="background: #2A2A4E;"></div>
+                <div class="color-name">SHADOW BLEEDS</div>
+                <div class="color-hex">#2A2A4E</div>
+            </div>
+            <div class="color-swatch">
+                <div class="color-block" style="background: #00001A;"></div>
+                <div class="color-name">THE VOID</div>
+                <div class="color-hex">#00001A</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Environments Section -->
+    <section id="environments">
+        <div class="section-header">
+            <p class="section-number">CHAPTER III</p>
+            <h2>Environment Design</h2>
+            <p class="section-intro">
+                Escalating dread — from the dimly lit entrance to the terrifying core of the rift.
+            </p>
+        </div>
+
+        <div class="gallery">
+            <div class="gallery-item">
+                <img src="01_library_exterior_night.jpg" alt="Library Exterior" onerror="this.src='01_library_exterior_night.JPG';">
+                <div class="gallery-caption">
+                    <h3>Library Exterior Night</h3>
+                    <p>A terrifying exterior view of the Gothic building under the bright full moon, where isolation and mystery prevail.</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="02_great_hall_corruption.jpg" alt="Great Hall Corruption" onerror="this.src='02_great_hall_corruption.JPG';">
+                <div class="gallery-caption">
+                    <h3>Great Hall Corruption</h3>
+                    <p>Spatial distortions and dark rifts tearing apart the corners of the hall, with books flying around by hidden forces.</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="06_corrupted_shelves (1).jpg" alt="Corrupted Shelves" onerror="this.src='06_corrupted_shelves.jpg';">
+                <div class="gallery-caption">
+                    <h3>Corrupted Shelves</h3>
+                    <p>Bookshelves growing and twisting like living roots, emitting mysterious neon colors in the pitch darkness.</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="07_corrupted_reading_room.jpg" alt="Reading Room" onerror="this.src='07_corrupted_reading_room.JPG';">
+                <div class="gallery-caption">
+                    <h3>Cursed Reading Room</h3>
+                    <p>An atmosphere charged with tension, and mysterious shadows gathering around the fireplace awaiting the unknown.</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="09_the_prime_archive.jpg" alt="Prime Archive" onerror="this.src='09_the_prime_archive.JPG';">
+                <div class="gallery-caption">
+                    <h3>The Prime Archive</h3>
+                    <p>The imposing central entity surrounded by vast space and revolving galaxies, embodying the center of absolute power and information.</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="10_corrupted_entrance.jpg" alt="Main Entrance" onerror="this.src='10_corrupted_entrance.JPG';">
+                <div class="gallery-caption">
+                    <h3>The Cracked Entrance</h3>
+                    <p>Signs of destruction fill the place, with branching roots and mysterious footprints stretching across the stone floor.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Characters Section -->
+    <section id="characters">
+        <div class="section-header">
+            <p class="section-number">CHAPTER IV</p>
+            <h2>Character Design</h2>
+            <p class="section-intro">
+                Three entangled souls — the investigator who reads, and the two brilliant minds who authored the nightmare.
+            </p>
+        </div>
+
+        <div class="character-grid">
+            <div class="character-card">
+                <img src="08_protag_desperate.jpg" alt="The Protagonist" class="character-image" onerror="this.src='08_protag_desperate.JPG';">
+                <div class="character-info">
+                    <p class="character-role">THE PROTAGONIST</p>
+                    <h3 class="character-name">Protagonist's Desperate Moment</h3>
+                    <div class="character-quote">
+                        "I came here to investigate a communications blackout... I never expected the connection to reality to be severed from within."
+                    </div>
+                    <div class="character-stats">
+                        <div class="stat"><div class="stat-label">Occupation</div><div class="stat-value">Archive Detective</div></div>
+                        <div class="stat"><div class="stat-label">Equipment</div><div class="stat-value">Flashlight & Manuscript</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="character-card">
+                <img src="03_dr_ares_thorn.jpg" alt="Dr. Ares Thorn" class="character-image" onerror="this.src='03_dr_ares_thorn.JPG';">
+                <div class="character-info">
+                    <p class="character-role">BOSS #1 — THE ARCHITECT</p>
+                    <h3 class="character-name">Dr. Ares Thorn</h3>
+                    <div class="character-quote">
+                        "Spacetime is not a cage — it is a canvas. And I, my friend, am the artist."
+                    </div>
+                    <div class="character-stats">
+                        <div class="stat"><div class="stat-label">Specialty</div><div class="stat-value">Spacetime Physics</div></div>
+                        <div class="stat"><div class="stat-label">Weakness</div><div class="stat-value">Logical Paradoxes</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="character-card">
+                <img src="04_dr_elena_rostova.jpg" alt="Dr. Elena Rostova" class="character-image" onerror="this.src='04_dr_elena_rostova.JPG';">
+                <div class="character-info">
+                    <p class="character-role">BOSS #2 — THE ARCHIVE BLOOM</p>
+                    <h3 class="character-name">Dr. Elena Rostova</h3>
+                    <div class="character-quote">
+                        "Information isn't merely ink on paper — it is life. And I will make sure it is fed."
+                    </div>
+                    <div class="character-stats">
+                        <div class="stat"><div class="stat-label">Specialty</div><div class="stat-value">Info-Biology</div></div>
+                        <div class="stat"><div class="stat-label">Weakness</div><div class="stat-value">Direct Light Focus</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enemies Section -->
+    <section id="enemies">
+        <div class="section-header">
+            <p class="section-number">CHAPTER V</p>
+            <h2>Enemy Design</h2>
+            <p class="section-intro">
+                Transformed victims — Hollow Readers wander the dark corridors.
+            </p>
+        </div>
+
+        <div class="gallery">
+            <div class="gallery-item">
+                <img src="05_hollow_reader.jpg" alt="The Hollow Reader" onerror="this.src='05_hollow_reader.JPG';">
+                <div class="gallery-caption">
+                    <h3>The Hollow Reader</h3>
+                    <p>A strange entity wandering among bookshelf rows, with a paper-covered face and glowing eyes seeking forbidden knowledge.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- UI Section -->
+    <section id="ui">
+        <div class="section-header">
+            <p class="section-number">CHAPTER VI</p>
+            <h2>Interface Design</h2>
+            <p class="section-intro">
+                A UI that degrades with the player's sanity.
+            </p>
+        </div>
+
+        <div class="ui-mockup">
+            <div class="ui-elements">
+                <div class="ui-element">
+                    <div class="ui-element-label">HEALTH</div>
+                    <div class="progress-bar"><div class="progress-fill health"></div></div>
+                </div>
+                <div class="ui-element">
+                    <div class="ui-element-label">CORRUPTION</div>
+                    <div class="progress-bar"><div class="progress-fill corruption"></div></div>
+                </div>
+                <div class="ui-element">
+                    <div class="ui-element-label">PAGES FOUND</div>
+                    <p style="font-family: 'Cinzel', serif; font-size: 2rem; color: var(--gold);">12/50</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Levels Section -->
+    <section id="levels">
+        <div class="section-header">
+            <p class="section-number">CHAPTER VII</p>
+            <h2>Level Design</h2>
+            <p class="section-intro">
+                Five descents into madness.
+            </p>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <p class="timeline-level">First Floor</p>
+                <h3 class="timeline-title">The Main Entrance — The Gate</h3>
+                <p class="timeline-desc">Where the player first enters. The horror is subtle here — strange distant noises and shifting shadows.</p>
+            </div>
+            <div class="timeline-item">
+                <p class="timeline-level">Second Floor</p>
+                <h3 class="timeline-title">History Department — Terror of Time</h3>
+                <p class="timeline-desc">Clocks frozen at different, contradictory times. Maps that literally bleed ink.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-symbol">📜</div>
+        <p class="footer-quote">"Writing is not a chain — it is the freedom to become anything."</p>
+        <p class="footer-credit">CORRUPTED PAGES SANCTUARY — VISUAL DESIGN BIBLE v1.0</p>
+    </footer>
+
+    <button class="scroll-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
+
+    <script>
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({ behavior: 'smooth' });
+                document.querySelectorAll('nav a').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            let current = '';
+            sections.forEach(section => {
+                if (window.scrollY >= section.offsetTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            document.querySelectorAll('nav a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href'] === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+            const scrollBtn = document.querySelector('.scroll-top');
+            if (window.scrollY > 500) {
+                scrollBtn.classList.add('visible');
+            } else {
+                scrollBtn.classList.remove('visible');
+            }
+        });
+    </script>
+</body>
+</html>
+```[cite: 10]
